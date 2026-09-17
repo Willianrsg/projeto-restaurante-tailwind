@@ -1,6 +1,7 @@
 const menu = document.getElementById('menu')
 const cartBtn = document.getElementById('cart-btn')
 const cartModal = document.getElementById('cart-modal')
+const cartModalContent = document.getElementById('cart-modal-content')
 const cartItemsContainer = document.getElementById('cart-items')
 const cartTotal = document.getElementById('cart-total')
 const checkoutBtn = document.getElementById('checkout-btn')
@@ -11,91 +12,156 @@ const addressWarn = document.getElementById('address-warn')
 
 let cart = []
 
-cartBtn.addEventListener('click', () => {
+function openCartModal() {
   updateCartModal()
   cartModal.classList.remove('hidden')
   cartModal.classList.add('flex')
+}
+
+function closeCartModal() {
+  cartModal.classList.remove('flex')
+  cartModal.classList.add('hidden')
+}
+
+cartBtn.addEventListener('click', () => {
+  openCartModal()
 })
 
 closeModal.addEventListener('click', () => {
-  cartModal.classList.remove('flex')
-  cartModal.classList.add('hidden')
+  closeCartModal()
 })
 
-// cartBtn.addEventListener('click', () => {
-//   updateCartModal()
-//   cartModal.style.display = 'flex'
-// })
-
-// closeModal.addEventListener('click', () => {
-//   cartModal.style.display = 'none'
-// })
-
-menu.addEventListener('click', (event) => { 
-  let parentBtn  = event.target.closest('.add-to-cart-btn')
-  if(parentBtn){
-    const name = parentBtn.getAttribute('data-name')
-    const price = parseFloat(parentBtn.getAttribute('data-price'))
-    addToCart(name, price)
+// Fecha o modal ao clicar fora da caixa branca (no overlay escuro)
+cartModal.addEventListener('click', (event) => {
+  if (event.target === cartModal) {
+    closeCartModal()
   }
 })
 
-function addToCart(name, price){
+menu.addEventListener('click', (event) => {
+  let parentBtn = event.target.closest('.add-to-cart-btn')
+  if (parentBtn) {
+    const name = parentBtn.getAttribute('data-name')
+    const price = parseFloat(parentBtn.getAttribute('data-price'))
+    addToCart(name, price)
+    showAddedToast(name)
+    pulseButton(parentBtn)
+  }
+})
+
+function pulseButton(btn) {
+  btn.classList.add('animate-pop')
+  setTimeout(() => btn.classList.remove('animate-pop'), 300)
+}
+
+function showAddedToast(name) {
+  Toastify({
+    text: `${name} adicionado ao carrinho!`,
+    duration: 2000,
+    close: true,
+    gravity: 'top',
+    position: 'right',
+    stopOnFocus: true,
+    style: {
+      background: '#ea580c',
+    },
+  }).showToast()
+}
+
+function addToCart(name, price) {
   const existingItems = cart.find(item => item.name === name)
-  if(existingItems){
-    existingItems.quantity +=1
-    return
+  if (existingItems) {
+    existingItems.quantity += 1
   } else {
-    cart.push({name, price, quantity: 1})
+    cart.push({ name, price, quantity: 1 })
   }
   updateCartModal()
 }
 
-function updateCartModal(){
+function updateCartModal() {
   cartItemsContainer.innerHTML = ""
+
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = `
+      <div class="flex flex-col items-center justify-center text-center py-8 text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <p class="text-sm">Seu carrinho está vazio</p>
+      </div>
+    `
+    cartTotal.textContent = (0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+    cartCount.innerHTML = 0
+    return
+  }
+
   let total = 0
   cart.forEach(item => {
     const cartItemElement = document.createElement('div')
-    cartItemElement.classList.add('flex', 'justify-between', 'mb-4', 'flex-col')
+    cartItemElement.classList.add('flex', 'items-center', 'justify-between', 'gap-3', 'py-3', 'border-b', 'border-gray-100', 'last:border-b-0')
     cartItemElement.innerHTML = `
-      <div class="flex items-center justify-between">
-        <div class="font-medium">
-          <p>${item.name}</p>
-          <p>Qtd: ${item.quantity}</p>
-          <p class="font-medium mte-2">Valor: ${item.price.toLocaleString('pt-BR', {
-            style: 'currency',
-            currency: 'BRL'
-          })}</p>
-        </div>
-        <button class="remove-cart" data-name="${item.name}">Remover</button>
+      <div class="flex-1">
+        <p class="font-medium text-gray-900">${item.name}</p>
+        <p class="text-sm text-gray-500">${item.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })} un.</p>
       </div>
+
+      <div class="flex items-center gap-2">
+        <button class="decrease-qty w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150" data-name="${item.name}">−</button>
+        <span class="w-6 text-center font-medium">${item.quantity}</span>
+        <button class="increase-qty w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150" data-name="${item.name}">+</button>
+      </div>
+
+      <button class="remove-cart w-8 h-8 flex items-center justify-center rounded-full text-red-500 hover:bg-red-50 transition-colors duration-150" data-name="${item.name}" title="Remover item">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="3 6 5 6 21 6"></polyline>
+          <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"></path>
+          <path d="M10 11v6"></path>
+          <path d="M14 11v6"></path>
+        </svg>
+      </button>
     `
     total += item.price * item.quantity
     cartItemsContainer.appendChild(cartItemElement)
   })
-  cartTotal.textContent = total.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-  })
-  cartCount.innerHTML = cart.length
+
+  cartTotal.textContent = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+  cartCount.innerHTML = cart.reduce((acc, item) => acc + item.quantity, 0)
 }
 
 cartItemsContainer.addEventListener('click', (event) => {
-  if(event.target.classList.contains('remove-cart')) {
-    const name = event.target.getAttribute('data-name')
-    removeItemCart(name)
+  const increaseBtn = event.target.closest('.increase-qty')
+  const decreaseBtn = event.target.closest('.decrease-qty')
+  const removeBtn = event.target.closest('.remove-cart')
+
+  if (increaseBtn) {
+    changeQuantity(increaseBtn.getAttribute('data-name'), 1)
+  }
+  if (decreaseBtn) {
+    changeQuantity(decreaseBtn.getAttribute('data-name'), -1)
+  }
+  if (removeBtn) {
+    removeItemCart(removeBtn.getAttribute('data-name'))
   }
 })
 
-function removeItemCart(name){
+function changeQuantity(name, delta) {
+  const item = cart.find(item => item.name === name)
+  if (!item) return
+
+  item.quantity += delta
+
+  if (item.quantity <= 0) {
+    removeItemCart(name)
+    return
+  }
+  updateCartModal()
+}
+
+function removeItemCart(name) {
   const index = cart.findIndex(item => item.name === name)
-  if(index !== -1){
-    const item = cart[index]
-    if(item.quantity > 1) {
-      item.quantity -= 1
-      updateCartModal()
-      return
-    } 
+  if (index !== -1) {
     cart.splice(index, 1)
     updateCartModal()
   }
@@ -103,7 +169,7 @@ function removeItemCart(name){
 
 addressInput.addEventListener('input', (event) => {
   let inputValue = event.target.value
-  if(inputValue !== ''){
+  if (inputValue !== '') {
     addressInput.classList.remove('border-red-500')
     addressWarn.classList.add('hidden')
   }
@@ -111,36 +177,22 @@ addressInput.addEventListener('input', (event) => {
 
 checkoutBtn.addEventListener('click', () => {
   const isOpen = checkRestaurantOpen()
-  if(!isOpen){
-    // alert('Estamos Fechados no momento!')
-    // Toastify({
-    //   text: 'Ops! Estamos Fechados no momento!',
-    //   duration: 3000,
-    //   close: true,
-    //   gravity: 'top',
-    //   position: 'right',
-    //   stopOnFocus: true,
-    //   style: {
-    //     background: '#ef4444',
-    //   }
-    // }).showToast()
+  if (!isOpen) {
     Toastify({
       text: "Ops! Estamos Fechados no momento!",
       duration: 3000,
-      newWindow: true,
       close: true,
-      gravity: "top", // `top` or `bottom`
-      position: "right", // `left`, `center` or `right`
-      stopOnFocus: true, // Prevents dismissing of toast on hover
+      gravity: "top",
+      position: "right",
+      stopOnFocus: true,
       style: {
         background: "#ef4444",
       },
-      // onClick: function(){} // Callback after click
-    }).showToast();
+    }).showToast()
     return
   }
-  if(cart.length === 0) return
-  if(addressInput.value === '') {
+  if (cart.length === 0) return
+  if (addressInput.value === '') {
     addressWarn.classList.remove('hidden')
     addressInput.classList.add('border-red-500')
     return
@@ -157,12 +209,13 @@ checkoutBtn.addEventListener('click', () => {
   window.open(`https://wa.me/${phone}?text=${message} Endereço: ${addressInput.value}`, '_blank')
   cart = []
   updateCartModal()
+  closeCartModal()
 })
 
 function checkRestaurantOpen() {
-  const data =  new Date()
+  const data = new Date()
   const hora = data.getHours()
-  return hora >= 18 && hora <= 22
+  return hora >= 14 && hora <= 22
 }
 
 const spanItem = document.getElementById('date-span')

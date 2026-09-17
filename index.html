@@ -17,12 +17,13 @@
   <meta property="og:description" content="O melhor hamburguer artesanal da cidade!" />
   <meta property="og:site_name" content="DevBurguer" />
   <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
   <script src='main.js'></script>
 </head>
 <body class="text-gray-800">
 
-  <!-- HEADER -->
-  <header class="header-glass bg-white/90 sticky top-0 z-40 border-b border-gray-100 shadow-sm">
+  <header class="bg-white/90 backdrop-blur sticky top-0 z-40 border-b border-gray-100 shadow-sm">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <img src="assets/hamb-1.png" alt="Logo Dev Burguer" class="w-12 h-12 rounded-full object-cover border-2 border-brand-500" />
@@ -49,7 +50,6 @@
     </div>
   </header>
 
-  <!-- HERO -->
   <section class="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-700 text-white">
     <div class="max-w-5xl mx-auto px-4 py-14 text-center animate-fadeIn">
       <h2 class="font-display text-4xl md:text-5xl mb-3">Sabor de verdade, direto na sua casa</h2>
@@ -57,12 +57,10 @@
         Hambúrgueres artesanais feitos na hora, com ingredientes selecionados e muito capricho.
       </p>
     </div>
-    <div class="absolute -bottom-1 left-0 right-0 h-10 bg-gray-50" style="clip-path: ellipse(60% 100% at 50% 100%);"></div>
   </section>
 
   <main id="menu" class="max-w-5xl mx-auto px-4 pb-24 -mt-4">
 
-    <!-- SEÇÃO HAMBURGUERES -->
     <section class="mt-10">
       <h3 class="font-display text-3xl text-gray-900 mb-6 flex items-center gap-2">
         <span class="w-2 h-8 bg-brand-600 rounded-full"></span>
@@ -71,7 +69,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
           <div class="overflow-hidden">
             <img src="assets/hamb-1.png" alt="Hambúrguer Smash" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -89,7 +87,7 @@
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
           <div class="overflow-hidden">
             <img src="assets/hamb-2.png" alt="Hambúrguer Duplo" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -107,7 +105,7 @@
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
           <div class="overflow-hidden">
             <img src="assets/hamb-3.png" alt="Hambúrguer Salad" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -125,7 +123,7 @@
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
           <div class="overflow-hidden">
             <img src="assets/hamb-4.png" alt="Hambúrguer da Casa" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -146,7 +144,6 @@
       </div>
     </section>
 
-    <!-- SEÇÃO BEBIDAS -->
     <section class="mt-14">
       <h3 class="font-display text-3xl text-gray-900 mb-6 flex items-center gap-2">
         <span class="w-2 h-8 bg-brand-600 rounded-full"></span>
@@ -193,14 +190,12 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="bg-gray-900 text-gray-400 text-center text-sm py-6">
     <p>&copy; 2026 Dev Burguer. Todos os direitos reservados.</p>
   </footer>
 
-  <!-- MODAL DO CARRINHO -->
   <div id="cart-modal" class="fixed inset-0 bg-black/50 z-[99] hidden items-center justify-center px-4">
-    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 animate-slideUp max-h-[85vh] flex flex-col">
+    <div id="cart-modal-content" class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 animate-slideUp max-h-[85vh] flex flex-col">
 
       <div class="flex items-center justify-between mb-4">
         <h3 class="font-display text-2xl text-gray-900">Meu Carrinho</h3>
@@ -213,7 +208,6 @@
       </div>
 
       <div id="cart-items" class="flex-1 overflow-y-auto pr-1 mb-4 min-h-[80px]">
-        <!-- itens do carrinho são injetados aqui via JS -->
       </div>
 
       <div class="flex items-center justify-between border-t border-gray-100 pt-4 mb-4">
