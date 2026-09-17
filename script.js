@@ -1,7 +1,6 @@
 const menu = document.getElementById('menu')
 const cartBtn = document.getElementById('cart-btn')
 const cartModal = document.getElementById('cart-modal')
-const cartModalContent = document.getElementById('cart-modal-content')
 const cartItemsContainer = document.getElementById('cart-items')
 const cartTotal = document.getElementById('cart-total')
 const checkoutBtn = document.getElementById('checkout-btn')
@@ -9,6 +8,11 @@ const closeModal = document.getElementById('close-modal-btn')
 const cartCount = document.getElementById('cart-count')
 const addressInput = document.getElementById('address')
 const addressWarn = document.getElementById('address-warn')
+const categoryBtns = document.querySelectorAll('.category-btn')
+const sections = document.querySelectorAll('main > section[data-section]')
+const summaryBar = document.getElementById('cart-summary-bar')
+const summaryText = document.getElementById('summary-text')
+const summaryCartBtn = document.getElementById('summary-cart-btn')
 
 let cart = []
 
@@ -27,25 +31,75 @@ cartBtn.addEventListener('click', () => {
   openCartModal()
 })
 
+summaryCartBtn.addEventListener('click', () => {
+  openCartModal()
+})
+
 closeModal.addEventListener('click', () => {
   closeCartModal()
 })
 
-// Fecha o modal ao clicar fora da caixa branca (no overlay escuro)
 cartModal.addEventListener('click', (event) => {
   if (event.target === cartModal) {
     closeCartModal()
   }
 })
 
+// FILTRO DE CATEGORIAS
+categoryBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    categoryBtns.forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+
+    const category = btn.getAttribute('data-category')
+
+    if (category === 'all') {
+      sections.forEach(section => section.classList.remove('hidden'))
+    } else {
+      sections.forEach(section => {
+        if (section.getAttribute('data-section') === category) {
+          section.classList.remove('hidden')
+        } else {
+          section.classList.add('hidden')
+        }
+      })
+    }
+  })
+})
+
+// CONTADOR DE QUANTIDADE NO CARD (antes de adicionar ao carrinho)
 menu.addEventListener('click', (event) => {
-  let parentBtn = event.target.closest('.add-to-cart-btn')
-  if (parentBtn) {
-    const name = parentBtn.getAttribute('data-name')
-    const price = parseFloat(parentBtn.getAttribute('data-price'))
-    addToCart(name, price)
-    showAddedToast(name)
-    pulseButton(parentBtn)
+  const increaseBtn = event.target.closest('.qty-increase')
+  const decreaseBtn = event.target.closest('.qty-decrease')
+  const addBtn = event.target.closest('.add-to-cart-btn')
+
+  if (increaseBtn) {
+    const card = increaseBtn.closest('.product-card')
+    const qtyEl = card.querySelector('.qty-value')
+    qtyEl.textContent = parseInt(qtyEl.textContent) + 1
+  }
+
+  if (decreaseBtn) {
+    const card = decreaseBtn.closest('.product-card')
+    const qtyEl = card.querySelector('.qty-value')
+    const current = parseInt(qtyEl.textContent)
+    if (current > 1) {
+      qtyEl.textContent = current - 1
+    }
+  }
+
+  if (addBtn) {
+    const card = addBtn.closest('.product-card')
+    const qtyEl = card.querySelector('.qty-value')
+    const quantity = parseInt(qtyEl.textContent)
+    const name = addBtn.getAttribute('data-name')
+    const price = parseFloat(addBtn.getAttribute('data-price'))
+
+    addToCart(name, price, quantity)
+    showAddedToast(name, quantity)
+    pulseButton(addBtn)
+
+    qtyEl.textContent = 1
   }
 })
 
@@ -54,9 +108,9 @@ function pulseButton(btn) {
   setTimeout(() => btn.classList.remove('animate-pop'), 300)
 }
 
-function showAddedToast(name) {
+function showAddedToast(name, quantity) {
   Toastify({
-    text: `${name} adicionado ao carrinho!`,
+    text: `${quantity}x ${name} adicionado ao carrinho!`,
     duration: 2000,
     close: true,
     gravity: 'top',
@@ -68,12 +122,12 @@ function showAddedToast(name) {
   }).showToast()
 }
 
-function addToCart(name, price) {
+function addToCart(name, price, quantity) {
   const existingItems = cart.find(item => item.name === name)
   if (existingItems) {
-    existingItems.quantity += 1
+    existingItems.quantity += quantity
   } else {
-    cart.push({ name, price, quantity: 1 })
+    cart.push({ name, price, quantity })
   }
   updateCartModal()
 }
@@ -94,6 +148,7 @@ function updateCartModal() {
     `
     cartTotal.textContent = (0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     cartCount.innerHTML = 0
+    summaryBar.classList.add('hidden')
     return
   }
 
@@ -126,8 +181,13 @@ function updateCartModal() {
     cartItemsContainer.appendChild(cartItemElement)
   })
 
+  const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0)
+
   cartTotal.textContent = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
-  cartCount.innerHTML = cart.reduce((acc, item) => acc + item.quantity, 0)
+  cartCount.innerHTML = totalItems
+
+  summaryText.textContent = `${totalItems} ${totalItems === 1 ? 'item' : 'itens'} · ${total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`
+  summaryBar.classList.remove('hidden')
 }
 
 cartItemsContainer.addEventListener('click', (event) => {
@@ -215,7 +275,7 @@ checkoutBtn.addEventListener('click', () => {
 function checkRestaurantOpen() {
   const data = new Date()
   const hora = data.getHours()
-  return hora >= 14 && hora <= 22
+  return hora >= 18 && hora <= 22
 }
 
 const spanItem = document.getElementById('date-span')

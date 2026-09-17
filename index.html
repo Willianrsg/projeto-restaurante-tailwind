@@ -21,7 +21,7 @@
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
   <script src='main.js'></script>
 </head>
-<body class="text-gray-800">
+<body class="text-gray-800 pb-20">
 
   <header class="bg-white/90 backdrop-blur sticky top-0 z-40 border-b border-gray-100 shadow-sm">
     <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
@@ -48,6 +48,19 @@
         </button>
       </div>
     </div>
+
+    <!-- FILTRO DE CATEGORIAS -->
+    <nav class="max-w-5xl mx-auto px-4 pb-3 flex gap-2 overflow-x-auto">
+      <button class="category-btn active whitespace-nowrap text-sm font-medium px-4 py-2 rounded-full bg-gray-100 text-gray-700 transition-colors duration-200" data-category="all">
+        Todos
+      </button>
+      <button class="category-btn whitespace-nowrap text-sm font-medium px-4 py-2 rounded-full bg-gray-100 text-gray-700 transition-colors duration-200" data-category="lanches">
+        Lanches
+      </button>
+      <button class="category-btn whitespace-nowrap text-sm font-medium px-4 py-2 rounded-full bg-gray-100 text-gray-700 transition-colors duration-200" data-category="bebidas">
+        Bebidas
+      </button>
+    </nav>
   </header>
 
   <section class="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-700 text-white">
@@ -61,7 +74,7 @@
 
   <main id="menu" class="max-w-5xl mx-auto px-4 pb-24 -mt-4">
 
-    <section class="mt-10">
+    <section class="mt-10" data-section="lanches">
       <h3 class="font-display text-3xl text-gray-900 mb-6 flex items-center gap-2">
         <span class="w-2 h-8 bg-brand-600 rounded-full"></span>
         Nosso Cardápio
@@ -69,7 +82,7 @@
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <article class="product-card group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" data-category="lanches">
           <div class="overflow-hidden">
             <img src="assets/hamb-1.png" alt="Hambúrguer Smash" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -78,16 +91,21 @@
             <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             <div class="flex items-center justify-between mt-4">
               <span class="font-bold text-brand-700">R$ 18,90</span>
-              <button
-                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-                data-name="Hambúrguer Smash" data-price="18.90">
-                Adicionar
-              </button>
+              <div class="flex items-center gap-2">
+                <button class="qty-decrease w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">−</button>
+                <span class="qty-value w-5 text-center font-medium">1</span>
+                <button class="qty-increase w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">+</button>
+              </div>
             </div>
+            <button
+              class="add-to-cart-btn w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              data-name="Hambúrguer Smash" data-price="18.90">
+              Adicionar
+            </button>
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <article class="product-card group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" data-category="lanches">
           <div class="overflow-hidden">
             <img src="assets/hamb-2.png" alt="Hambúrguer Duplo" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -96,16 +114,21 @@
             <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             <div class="flex items-center justify-between mt-4">
               <span class="font-bold text-brand-700">R$ 32,90</span>
-              <button
-                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-                data-name="Hambúrguer Duplo" data-price="32.90">
-                Adicionar
-              </button>
+              <div class="flex items-center gap-2">
+                <button class="qty-decrease w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">−</button>
+                <span class="qty-value w-5 text-center font-medium">1</span>
+                <button class="qty-increase w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">+</button>
+              </div>
             </div>
+            <button
+              class="add-to-cart-btn w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              data-name="Hambúrguer Duplo" data-price="32.90">
+              Adicionar
+            </button>
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <article class="product-card group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" data-category="lanches">
           <div class="overflow-hidden">
             <img src="assets/hamb-3.png" alt="Hambúrguer Salad" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -114,16 +137,21 @@
             <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             <div class="flex items-center justify-between mt-4">
               <span class="font-bold text-brand-700">R$ 22,90</span>
-              <button
-                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-                data-name="Hambúrguer Salad" data-price="22.90">
-                Adicionar
-              </button>
+              <div class="flex items-center gap-2">
+                <button class="qty-decrease w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">−</button>
+                <span class="qty-value w-5 text-center font-medium">1</span>
+                <button class="qty-increase w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">+</button>
+              </div>
             </div>
+            <button
+              class="add-to-cart-btn w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              data-name="Hambúrguer Salad" data-price="22.90">
+              Adicionar
+            </button>
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <article class="product-card group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" data-category="lanches">
           <div class="overflow-hidden">
             <img src="assets/hamb-4.png" alt="Hambúrguer da Casa" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -132,19 +160,24 @@
             <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
             <div class="flex items-center justify-between mt-4">
               <span class="font-bold text-brand-700">R$ 38,90</span>
-              <button
-                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-                data-name="Hambúrguer Casa" data-price="38.90">
-                Adicionar
-              </button>
+              <div class="flex items-center gap-2">
+                <button class="qty-decrease w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">−</button>
+                <span class="qty-value w-5 text-center font-medium">1</span>
+                <button class="qty-increase w-7 h-7 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold transition-colors duration-150">+</button>
+              </div>
             </div>
+            <button
+              class="add-to-cart-btn w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              data-name="Hambúrguer Casa" data-price="38.90">
+              Adicionar
+            </button>
           </div>
         </article>
 
       </div>
     </section>
 
-    <section class="mt-14">
+    <section class="mt-14" data-section="bebidas">
       <h3 class="font-display text-3xl text-gray-900 mb-6 flex items-center gap-2">
         <span class="w-2 h-8 bg-brand-600 rounded-full"></span>
         Bebidas
@@ -152,7 +185,7 @@
 
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <article class="product-card group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" data-category="bebidas">
           <div class="overflow-hidden">
             <img src="assets/refri-1.png" alt="Coca Lata" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -160,16 +193,21 @@
             <h4 class="font-semibold text-gray-900">Coca Lata</h4>
             <div class="flex items-center justify-between mt-3">
               <span class="font-bold text-brand-700">R$ 5,00</span>
-              <button
-                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-                data-name="Coca Lata" data-price="5.00">
-                +
-              </button>
+              <div class="flex items-center gap-1">
+                <button class="qty-decrease w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold transition-colors duration-150">−</button>
+                <span class="qty-value w-4 text-center text-sm font-medium">1</span>
+                <button class="qty-increase w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold transition-colors duration-150">+</button>
+              </div>
             </div>
+            <button
+              class="add-to-cart-btn w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              data-name="Coca Lata" data-price="5.00">
+              Adicionar
+            </button>
           </div>
         </article>
 
-        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+        <article class="product-card group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden" data-category="bebidas">
           <div class="overflow-hidden">
             <img src="assets/refri-2.png" alt="Guaraná Lata" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
           </div>
@@ -177,12 +215,17 @@
             <h4 class="font-semibold text-gray-900">Guaraná Lata</h4>
             <div class="flex items-center justify-between mt-3">
               <span class="font-bold text-brand-700">R$ 5,00</span>
-              <button
-                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
-                data-name="Guaraná Lata" data-price="5.00">
-                +
-              </button>
+              <div class="flex items-center gap-1">
+                <button class="qty-decrease w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold transition-colors duration-150">−</button>
+                <span class="qty-value w-4 text-center text-sm font-medium">1</span>
+                <button class="qty-increase w-6 h-6 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-bold transition-colors duration-150">+</button>
+              </div>
             </div>
+            <button
+              class="add-to-cart-btn w-full mt-3 bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium py-2 rounded-lg transition-all duration-200 hover:scale-[1.02]"
+              data-name="Guaraná Lata" data-price="5.00">
+              Adicionar
+            </button>
           </div>
         </article>
 
@@ -190,8 +233,10 @@
     </section>
   </main>
 
+  <!-- FOOTER -->
   <footer class="bg-gray-900 text-gray-400 text-center text-sm py-6">
     <p>&copy; 2026 Dev Burguer. Todos os direitos reservados.</p>
+    <p class="text-xs text-gray-500 mt-1">Desenvolvido por WDN Sistemas</p>
   </footer>
 
   <div id="cart-modal" class="fixed inset-0 bg-black/50 z-[99] hidden items-center justify-center px-4">
@@ -231,6 +276,16 @@
         class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-lg mt-2 transition-all duration-200 hover:scale-[1.02]"
       >
         Finalizar pedido
+      </button>
+    </div>
+  </div>
+
+  <!-- BARRA FIXA DE RESUMO DO CARRINHO -->
+  <div id="cart-summary-bar" class="hidden fixed bottom-0 left-0 right-0 bg-brand-700 text-white px-4 py-3 z-[80] animate-slideUpBar">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <span id="summary-text" class="text-sm font-medium">0 itens · R$ 0,00</span>
+      <button id="summary-cart-btn" class="bg-white text-brand-700 text-sm font-semibold px-4 py-2 rounded-full transition-transform duration-200 hover:scale-105">
+        Ver carrinho
       </button>
     </div>
   </div>
