@@ -28,3 +28,9 @@ body {
   background-color: #ea580c;
   color: #fff;
 }
+
+.payment-btn.selected {
+  background-color: #ea580c;
+  border-color: #ea580c;
+  color: #fff;
+}

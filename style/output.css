@@ -1416,6 +1416,10 @@ video {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+.grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .flex-row{
   flex-direction: row;
 }
@@ -3017,6 +3021,12 @@ body {
 
 .category-btn.active {
   background-color: #ea580c;
+  color: #fff;
+}
+
+.payment-btn.selected {
+  background-color: #ea580c;
+  border-color: #ea580c;
   color: #fff;
 }
 

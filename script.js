@@ -13,8 +13,13 @@ const sections = document.querySelectorAll('main > section[data-section]')
 const summaryBar = document.getElementById('cart-summary-bar')
 const summaryText = document.getElementById('summary-text')
 const summaryCartBtn = document.getElementById('summary-cart-btn')
+const paymentBtns = document.querySelectorAll('.payment-btn')
+const paymentWarn = document.getElementById('payment-warn')
+const changeWrapper = document.getElementById('change-wrapper')
+const changeValueInput = document.getElementById('change-value')
 
 let cart = []
+let selectedPayment = null
 
 function openCartModal() {
   updateCartModal()
@@ -235,6 +240,44 @@ addressInput.addEventListener('input', (event) => {
   }
 })
 
+paymentBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    paymentBtns.forEach(b => b.classList.remove('selected'))
+    btn.classList.add('selected')
+    selectedPayment = btn.getAttribute('data-payment')
+    paymentWarn.classList.add('hidden')
+
+    if (selectedPayment === 'Dinheiro') {
+      changeWrapper.classList.remove('hidden')
+    } else {
+      changeWrapper.classList.add('hidden')
+      changeValueInput.value = ''
+    }
+  })
+})
+
+// MÁSCARA MONETÁRIA NO CAMPO DE TROCO
+changeValueInput.addEventListener('input', (event) => {
+  let value = event.target.value
+
+  // Mantém apenas números
+  value = value.replace(/\D/g, '')
+
+  if (value === '') {
+    event.target.value = ''
+    return
+  }
+
+  // Converte para número e divide por 100 para posicionar os centavos
+  value = (parseInt(value, 10) / 100).toFixed(2)
+
+  // Formata como moeda brasileira (R$ 1.234,56)
+  event.target.value = parseFloat(value).toLocaleString('pt-BR', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })
+})
+
 checkoutBtn.addEventListener('click', () => {
   const isOpen = checkRestaurantOpen()
   if (!isOpen) {
@@ -257,6 +300,10 @@ checkoutBtn.addEventListener('click', () => {
     addressInput.classList.add('border-red-500')
     return
   }
+  if (!selectedPayment) {
+    paymentWarn.classList.remove('hidden')
+    return
+  }
 
   const cartItems = cart.map(item => {
     return (
@@ -264,10 +311,20 @@ checkoutBtn.addEventListener('click', () => {
     )
   }).join('')
 
-  const message = encodeURIComponent(cartItems)
+  let paymentInfo = `Forma de pagamento: ${selectedPayment}`
+  if (selectedPayment === 'Dinheiro' && changeValueInput.value !== '') {
+    paymentInfo += ` (troco para R$ ${changeValueInput.value})`
+  }
+
+  const message = encodeURIComponent(`${cartItems} ${paymentInfo}`)
   const phone = '44988113232'
   window.open(`https://wa.me/${phone}?text=${message} Endereço: ${addressInput.value}`, '_blank')
+
   cart = []
+  selectedPayment = null
+  paymentBtns.forEach(b => b.classList.remove('selected'))
+  changeWrapper.classList.add('hidden')
+  changeValueInput.value = ''
   updateCartModal()
   closeCartModal()
 })
