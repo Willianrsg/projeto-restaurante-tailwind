@@ -13,12 +13,23 @@ let cart = []
 
 cartBtn.addEventListener('click', () => {
   updateCartModal()
-  cartModal.style.display = 'flex'
+  cartModal.classList.remove('hidden')
+  cartModal.classList.add('flex')
 })
 
 closeModal.addEventListener('click', () => {
-  cartModal.style.display = 'none'
+  cartModal.classList.remove('flex')
+  cartModal.classList.add('hidden')
 })
+
+// cartBtn.addEventListener('click', () => {
+//   updateCartModal()
+//   cartModal.style.display = 'flex'
+// })
+
+// closeModal.addEventListener('click', () => {
+//   cartModal.style.display = 'none'
+// })
 
 menu.addEventListener('click', (event) => { 
   let parentBtn  = event.target.closest('.add-to-cart-btn')

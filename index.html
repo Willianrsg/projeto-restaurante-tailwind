@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset='utf-8'>
   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
@@ -19,132 +19,228 @@
   <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
   <script src='main.js'></script>
 </head>
-<body>
-  <header class="w-full h-[420px] bg-zinc-900 bg-home">
-    <div class="w-full h-full flex flex-col justify-center items-center">
-      <img src="assets/hamb-1.png" alt="Logo" class="w-32 h-32 rounded-full shadow-lg hover:scale-110 duration-200">
-      <h1 class="text-4xl mt-4 font-bold text-white">Dev Burguer</h1>
-      <span class="text-white font-medium">Rua: algum lugar, Procure no Mapa - PR</span>
-      <div class="bg-green-600 px-4 py-1 rounded-lg mt-5" id="date-span">
-        <span class="text-white font-medium">Ter á Dom - 18:00 as 22:00</span>
+<body class="text-gray-800">
+
+  <!-- HEADER -->
+  <header class="header-glass bg-white/90 sticky top-0 z-40 border-b border-gray-100 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="assets/hamb-1.png" alt="Logo Dev Burguer" class="w-12 h-12 rounded-full object-cover border-2 border-brand-500" />
+        <div>
+          <h1 class="font-display text-2xl leading-none text-gray-900">Dev Burguer</h1>
+          <p class="text-xs text-gray-500 hidden sm:block">Rua: algum lugar, Procure no Mapa - PR</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span id="date-span" class="hidden sm:inline-flex items-center gap-1 text-xs font-medium text-white px-3 py-1 rounded-full transition-colors duration-300">
+          Ter à Dom · 18h às 22h
+        </span>
+        <button id="cart-btn" class="relative flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-medium px-4 py-2 rounded-full transition-all duration-200 hover:scale-105 cart-fab">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="hidden sm:inline">Carrinho</span>
+          <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-brand-700 text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full shadow">0</span>
+        </button>
       </div>
     </div>
   </header>
 
-  <h2 class="text-2xl md:text-3xl font-bold text-center mt-9 mb-6">Conheça nosso cardapio</h2>
-
-  <div id="menu">
-    <main class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-12 mx-auto max-w-7xl px-2 mb-16">
-      <div class="flex gap-2">
-        <img src="assets/hamb-1.png" alt="hamburguer smash" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-200">
-        <div>
-          <p class="font-bold">hamburguer Smash</p>
-          <p class="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-          <div class="flex items-center gap-2 justify-between mt-3">
-            <p class="font-bold text-lg">R$ 18,90</p>
-            <button class="bg-gray-900 px-5 rounded add-to-cart-btn hover:bg-gray-600" data-name="hamburguer smash" data-price="18.90">
-              <i class="fa fa-cart-plus text-white text-lg"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <img src="assets/hamb-2.png" alt="hamburguer duplo" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-200">
-        <div>
-          <p class="font-bold">hamburguer Duplo</p>
-          <p class="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-          <div class="flex items-center gap-2 justify-between mt-3">
-            <p class="font-bold text-lg">R$ 32,90</p>
-            <button class="bg-gray-900 px-5 rounded add-to-cart-btn  hover:bg-gray-600" data-name="hamburguer duplo" data-price="32.90">
-              <i class="fa fa-cart-plus text-white text-lg"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <img src="assets/hamb-3.png" alt="hamburguer Salad" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-200">
-        <div>
-          <p class="font-bold">hamburguer Salad</p>
-          <p class="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-          <div class="flex items-center gap-2 justify-between mt-3">
-            <p class="font-bold text-lg">R$ 22,90</p>
-            <button class="bg-gray-900 px-5 rounded add-to-cart-btn  hover:bg-gray-600" data-name="hamburguer Salad" data-price="22.90">
-              <i class="fa fa-cart-plus text-white text-lg"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="flex gap-2">
-        <img src="assets/hamb-4.png" alt="hamburguer da Casa" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-200">
-        <div>
-          <p class="font-bold">hamburguer Casa</p>
-          <p class="text-sm">Lorem ipsum dolor, sit amet consectetur adipisicing elit. </p>
-          <div class="flex items-center gap-2 justify-between mt-3">
-            <p class="font-bold text-lg">R$ 38,90</p>
-            <button class="bg-gray-900 px-5 rounded add-to-cart-btn  hover:bg-gray-600" data-name="hamburguer Casa" data-price="38.90">
-              <i class="fa fa-cart-plus text-white text-lg"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </main>
-
-    <div class="mx-auto max-w-7xl px-2 my-2">
-      <h2 class="font-bold text-3xl">Bebidas</h2>
+  <!-- HERO -->
+  <section class="relative overflow-hidden bg-gradient-to-br from-brand-600 to-brand-700 text-white">
+    <div class="max-w-5xl mx-auto px-4 py-14 text-center animate-fadeIn">
+      <h2 class="font-display text-4xl md:text-5xl mb-3">Sabor de verdade, direto na sua casa</h2>
+      <p class="text-brand-50/90 max-w-xl mx-auto text-sm md:text-base">
+        Hambúrgueres artesanais feitos na hora, com ingredientes selecionados e muito capricho.
+      </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-12 mx-auto max-w-7xl px-2 mb-16">
-      <div class="flex gap-2 w-full">
-        <img src="assets/refri-1.png" alt="Coca Lata" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-200">
-        <div class="w-full">
-          <p class="font-bold">Coca Lata</p>
-          <div class="flex items-center gap-2 justify-between mt-3">
-            <p class="font-bold text-lg">R$ 5,00</p>
-            <button class="bg-gray-900 px-5 rounded add-to-cart-btn  hover:bg-gray-600" data-name="Coca Lata" data-price="5.00">
-              <i class="fa fa-cart-plus text-white text-lg"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-7 md:gap-12 mx-auto max-w-7xl px-2 mb-16">
-      <div class="flex gap-2 w-full">
-        <img src="assets/refri-2.png" alt="Guarana Lata" class="w-28 h-28 rounded-md hover:scale-110 hover:-rotate-2 duration-200">
-        <div class="w-full">
-          <p class="font-bold">Guarana Lata</p>
-          <div class="flex items-center gap-2 justify-between mt-3">
-            <p class="font-bold text-lg">R$ 5,00</p>
-            <button class="bg-gray-900 px-5 rounded add-to-cart-btn  hover:bg-gray-600" data-name="Guarana Lata" data-price="5.00">
-              <i class="fa fa-cart-plus text-white text-lg"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    <div class="absolute -bottom-1 left-0 right-0 h-10 bg-gray-50" style="clip-path: ellipse(60% 100% at 50% 100%);"></div>
+  </section>
 
-  <div class="bg-black/50 w-full h-full fixed top-0 left-0 z-[99] hidden items-center justify-center" id="cart-modal">
-    <div class="bg-white p-5 rounded-md min-w-[90%] md:min-w-[600px]">
-      <h2 class="text-center text-bold mb-2 text-2xl">Meu Carrinho</h2>
-      <div id="cart-items" class="flex justify-between mb-2 flex-col"></div>.
-      <p class="font-bold">Total : <span id="cart-total">0.00</span></p>
-      <p class="font-bold mt-4">Endereço de entrega:</p>
-      <input type="text" class="w-full border-2 p-1 rounded my-1" name="" id="address" placeholder="Endereço completo...">
-      <p class="text-red-500 hidden" id="address-warn">Digite seu endereço completo</p>
-      <div class="flex items-center justify-between mt-4 w-full">
-        <button id="close-modal-btn">Fechar</button>
-        <button id="checkout-btn" class="bg-green-500 text-white px-4 py-1 rounded">Finalizar pedido</button>
-      </div>
-    </div>
-  </div>
+  <main id="menu" class="max-w-5xl mx-auto px-4 pb-24 -mt-4">
 
-  <footer class="w-full bg-red-500 hover:bg-red-700 cursor-pointer py-3 fixed bottom-0 z-40 flex items-center justify-center">
-    <button class="flex items-center text-white gap-2 font-bold" id="cart-btn">
-      (<span id="cart-count">0</span>)
-      <i class="fa fa-cart-plus text-lg text-white"></i>
-    </button>
+    <!-- SEÇÃO HAMBURGUERES -->
+    <section class="mt-10">
+      <h3 class="font-display text-3xl text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-2 h-8 bg-brand-600 rounded-full"></span>
+        Nosso Cardápio
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+          <div class="overflow-hidden">
+            <img src="assets/hamb-1.png" alt="Hambúrguer Smash" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-lg text-gray-900">Hambúrguer Smash</h4>
+            <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="font-bold text-brand-700">R$ 18,90</span>
+              <button
+                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                data-name="Hambúrguer Smash" data-price="18.90">
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+          <div class="overflow-hidden">
+            <img src="assets/hamb-2.png" alt="Hambúrguer Duplo" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-lg text-gray-900">Hambúrguer Duplo</h4>
+            <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="font-bold text-brand-700">R$ 32,90</span>
+              <button
+                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                data-name="Hambúrguer Duplo" data-price="32.90">
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+          <div class="overflow-hidden">
+            <img src="assets/hamb-3.png" alt="Hambúrguer Salad" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-lg text-gray-900">Hambúrguer Salad</h4>
+            <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="font-bold text-brand-700">R$ 22,90</span>
+              <button
+                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                data-name="Hambúrguer Salad" data-price="22.90">
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden animate-slideUp">
+          <div class="overflow-hidden">
+            <img src="assets/hamb-4.png" alt="Hambúrguer da Casa" class="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-lg text-gray-900">Hambúrguer Casa</h4>
+            <p class="text-sm text-gray-500 mt-1 line-clamp-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+            <div class="flex items-center justify-between mt-4">
+              <span class="font-bold text-brand-700">R$ 38,90</span>
+              <button
+                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                data-name="Hambúrguer Casa" data-price="38.90">
+                Adicionar
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SEÇÃO BEBIDAS -->
+    <section class="mt-14">
+      <h3 class="font-display text-3xl text-gray-900 mb-6 flex items-center gap-2">
+        <span class="w-2 h-8 bg-brand-600 rounded-full"></span>
+        Bebidas
+      </h3>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="overflow-hidden">
+            <img src="assets/refri-1.png" alt="Coca Lata" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-gray-900">Coca Lata</h4>
+            <div class="flex items-center justify-between mt-3">
+              <span class="font-bold text-brand-700">R$ 5,00</span>
+              <button
+                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                data-name="Coca Lata" data-price="5.00">
+                +
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <article class="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden">
+          <div class="overflow-hidden">
+            <img src="assets/refri-2.png" alt="Guaraná Lata" class="w-full h-32 object-cover group-hover:scale-110 transition-transform duration-300" />
+          </div>
+          <div class="p-4">
+            <h4 class="font-semibold text-gray-900">Guaraná Lata</h4>
+            <div class="flex items-center justify-between mt-3">
+              <span class="font-bold text-brand-700">R$ 5,00</span>
+              <button
+                class="add-to-cart-btn bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-3 py-2 rounded-lg transition-all duration-200 hover:scale-105"
+                data-name="Guaraná Lata" data-price="5.00">
+                +
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-900 text-gray-400 text-center text-sm py-6">
+    <p>&copy; 2026 Dev Burguer. Todos os direitos reservados.</p>
   </footer>
 
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- MODAL DO CARRINHO -->
+  <div id="cart-modal" class="fixed inset-0 bg-black/50 z-[99] hidden items-center justify-center px-4">
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6 animate-slideUp max-h-[85vh] flex flex-col">
+
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-display text-2xl text-gray-900">Meu Carrinho</h3>
+        <button id="close-modal-btn" class="text-gray-400 hover:text-gray-700 transition-colors duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div id="cart-items" class="flex-1 overflow-y-auto pr-1 mb-4 min-h-[80px]">
+        <!-- itens do carrinho são injetados aqui via JS -->
+      </div>
+
+      <div class="flex items-center justify-between border-t border-gray-100 pt-4 mb-4">
+        <span class="text-gray-500 font-medium">Total</span>
+        <span id="cart-total" class="font-bold text-xl text-brand-700">R$ 0,00</span>
+      </div>
+
+      <div class="mb-2">
+        <label for="address" class="text-sm font-medium text-gray-700 mb-1 block">Endereço de entrega</label>
+        <input
+          id="address"
+          type="text"
+          placeholder="Digite seu endereço completo"
+          class="w-full border border-gray-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 rounded-lg px-3 py-2 text-sm outline-none transition-all duration-200"
+        />
+        <p id="address-warn" class="hidden text-red-500 text-xs mt-1">Endereço é obrigatório para finalizar o pedido.</p>
+      </div>
+
+      <button
+        id="checkout-btn"
+        class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 rounded-lg mt-2 transition-all duration-200 hover:scale-[1.02]"
+      >
+        Finalizar pedido
+      </button>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>
